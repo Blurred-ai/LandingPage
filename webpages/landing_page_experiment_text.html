@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blurred.ai — Nothing Personal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 400px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1001;
+            border-radius: 10px;
+            overflow: hidden;
+            top: 100%;
+            left: 0;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f8f9fa;
+            color: #667eea;
+        }
+
+        .dropdown-content a i {
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f8f9fa;
+            color: #667eea;
+        }
+
+        .dropdown-item {
+            display: flex;
+            flex-direction: column;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .dropdown-item-title {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .dropdown-item-title i {
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .dropdown-item-desc {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.3;
+            margin-left: 24px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .taglines {
+            margin-bottom: 2rem;
+        }
+
+        .tagline-primary {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            opacity: 0.95;
+            font-style: italic;
+        }
+
+        .tagline-secondary {
+            font-size: 1.1rem;
+            font-weight: 400;
+            opacity: 0.8;
+            color: #e2e8f0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            background: #f8fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1a202c;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #718096;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a202c;
+        }
+
+        .feature-card p {
+            color: #718096;
+            line-height: 1.7;
+        }
+
+        /* Compliance Section */
+        .compliance {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .compliance-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .compliance-text h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1a202c;
+        }
+
+        .compliance-text p {
+            font-size: 1.1rem;
+            color: #718096;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .compliance-badge {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .compliance-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            color: white;
+        }
+
+        .compliance-image i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* API Demo Section */
+        .demo {
+            padding: 5rem 2rem;
+            background: #f8fafc;
+        }
+
+        .demo-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+
+        .demo-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .demo-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .demo-output {
+            background: #1a202c;
+            color: #48bb78;
+            padding: 1rem;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            min-height: 100px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a202c;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer p {
+            color: #a0aec0;
+            margin-bottom: 2rem;
+        }
+
+        .footer-taglines {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .footer-tagline {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #e2e8f0;
+            font-style: italic;
+        }
+
+        .footer-brand {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #cbd5e0;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #667eea;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .dropdown-content {
+                position: static;
+                display: none;
+                background: transparent;
+                box-shadow: none;
+                margin-top: 0;
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: none;
+            }
+
+            .compliance-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                Blurred.ai
+            </div>
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="#"><i class="fas fa-cube"></i> Product <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i></a>
+                    <div class="dropdown-content">
+                        <div class="dropdown-item">
+                            <div class="dropdown-item-title">
+                                <i class="fas fa-puzzle-piece"></i> Browser Extension
+                            </div>
+                            <div class="dropdown-item-desc">Real-time PII detection and redaction for web browsing</div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="dropdown-item-title">
+                                <i class="fas fa-cloud"></i> SaaS Platform
+                            </div>
+                            <div class="dropdown-item-desc">Web-based interface for document processing and management</div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="dropdown-item-title">
+                                <i class="fas fa-code"></i> RESTful API
+                            </div>
+                            <div class="dropdown-item-desc">Programmatic access for integration into your applications</div>
+                        </div>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#"><i class="fas fa-lightbulb"></i> Solutions <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i></a>
+                    <div class="dropdown-content">
+                        <div class="dropdown-item">
+                            <div class="dropdown-item-title">
+                                <i class="fas fa-font"></i> TextBlur
+                            </div>
+                            <div class="dropdown-item-desc">Advanced text analysis with custom PII detection patterns</div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="dropdown-item-title">
+                                <i class="fas fa-file-alt"></i> DocumentBlur
+                            </div>
+                            <div class="dropdown-item-desc">PDF and document processing with intelligent redaction</div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="dropdown-item-title">
+                                <i class="fas fa-image"></i> ImageBlur
+                            </div>
+                            <div class="dropdown-item-desc">Visual PII detection and blurring in images and photos</div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="dropdown-item-title">
+                                <i class="fas fa-video"></i> VideoBlur
+                            </div>
+                            <div class="dropdown-item-desc">Real-time video processing with PII detection and masking</div>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#compliance">Compliance</a></li>
+                <li><a href="#demo">API Demo</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content fade-in-up">
+            <h1>"Because Not Everything Should Be Seen."</h1>
+            <p class="hero-subtitle">
+                Advanced PII detection and redaction API with DPDP Act compliance and custom tagging capabilities
+            </p>
+            <!-- <div class="taglines">
+                <p class="tagline-primary">"Because Not Everything Should Be Seen."</p>
+                <p class="tagline-secondary">Blurred.ai — Nothing Personal.</p> 
+            </div> -->
+            <div class="cta-buttons">
+                <a href="#demo" class="btn btn-primary">
+                    <i class="fas fa-play"></i> Try API Demo
+                </a>
+                <a href="#features" class="btn btn-secondary">
+                    <i class="fas fa-info-circle"></i> Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Powerful PII Protection</h2>
+            <p class="section-subtitle">
+                Comprehensive detection and redaction of Personally Identifiable Information with enterprise-grade security
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3>DPDP Act Compliant</h3>
+                    <p>
+                        Fully compliant with India's Digital Personal Data Protection Act. 
+                        Built-in safeguards ensure your data processing meets all regulatory requirements 
+                        and maintains user privacy rights.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h3>Custom PII Tagging</h3>
+                    <p>
+                        Advanced custom tagging system for PII entities. Create organization-specific 
+                        patterns, define custom categories, and implement tailored detection rules 
+                        for your unique data requirements.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Comprehensive Detection</h3>
+                    <p>
+                        Detect 20+ types of PII including emails, phone numbers, government IDs, 
+                        addresses, bank details, and sensitive personal information with high accuracy.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-eraser"></i>
+                    </div>
+                    <h3>Smart Redaction</h3>
+                    <p>
+                        Multiple redaction modes with configurable rules. Choose from standard, 
+                        aggressive, or custom redaction patterns while preserving data format integrity.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>High Performance</h3>
+                    <p>
+                        Optimized for speed and scalability. Process thousands of documents 
+                        efficiently with batch processing capabilities and real-time API responses.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Developer Friendly</h3>
+                    <p>
+                        RESTful API with comprehensive documentation, multiple SDKs, 
+                        and interactive testing tools. Easy integration with your existing systems.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compliance Section -->
+    <section id="compliance" class="compliance">
+        <div class="compliance-content">
+            <div class="compliance-text">
+                <h2>DPDP Act Compliance Built-In</h2>
+                <p>
+                    Our PII detection and redaction system is designed with India's Digital Personal Data Protection Act 
+                    (DPDP Act) compliance at its core. We ensure that your data processing activities meet all regulatory 
+                    requirements while maintaining the highest standards of data protection.
+                </p>
+                <p>
+                    From automated consent management to data minimization principles, our API helps you implement 
+                    DPDP-compliant data handling practices seamlessly.
+                </p>
+                <div class="compliance-badge">
+                    <i class="fas fa-check-circle"></i>
+                    DPDP Act Compliant
+                </div>
+            </div>
+            <div class="compliance-image">
+                <i class="fas fa-shield-check"></i>
+                <h3>Regulatory Ready</h3>
+                <p>Built for compliance from the ground up</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Demo Section -->
+    <section id="demo" class="demo">
+        <div class="demo-content">
+            <h2 class="section-title">Try Our API</h2>
+            <p class="section-subtitle">
+                Experience the power of our PII detection API with this interactive demo
+            </p>
+            
+            <div class="demo-card">
+                <h3>PII Detection Demo</h3>
+                <p style="margin-bottom: 1rem; color: #718096;">
+                    Enter text containing PII to see our detection system in action:
+                </p>
+                
+                <textarea 
+                    id="demoInput" 
+                    class="demo-input" 
+                    rows="4" 
+                    placeholder="Enter text with PII here... Example: My email is john.doe@example.com and my phone number is +91-9876543210. My Aadhaar number is 1234-5678-9012."
+                ></textarea>
+                
+                <button id="detectBtn" class="btn btn-primary" style="margin-bottom: 1rem;">
+                    <i class="fas fa-search"></i> Detect PII
+                </button>
+                
+                <div id="demoOutput" class="demo-output" style="display: none;">
+                    <div id="loadingIndicator" style="display: none;">
+                        <div class="loading"></div> Processing...
+                    </div>
+                    <div id="resultContent"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+                            <div class="footer-content">
+            <h3>Ready to Protect Your Data?</h3>
+            <p>
+                Get started with our PII detection API today and ensure your data processing 
+                meets the highest standards of privacy and compliance.
+            </p>
+            <div class="footer-taglines">
+                <p class="footer-tagline">"Because Not Everything Should Be Seen."</p>
+                <p class="footer-brand">Blurred.ai — Nothing Personal.</p>
+            </div>
+                
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> Get Started
+                    </a>
+                    <a href="/redoc" class="btn btn-secondary">
+                        <i class="fas fa-file-alt"></i> View Documentation
+                    </a>
+                </div>
+                
+                <div style="margin-top: 2rem;">
+                    <p>© 2025 Blurred.ai. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Demo functionality
+        const demoInput = document.getElementById('demoInput');
+        const detectBtn = document.getElementById('detectBtn');
+        const demoOutput = document.getElementById('demoOutput');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const resultContent = document.getElementById('resultContent');
+
+        detectBtn.addEventListener('click', async () => {
+            const text = demoInput.value.trim();
+            if (!text) {
+                alert('Please enter some text to analyze');
+                return;
+            }
+
+            // Show loading
+            demoOutput.style.display = 'block';
+            loadingIndicator.style.display = 'block';
+            resultContent.innerHTML = '';
+
+            try {
+                // Simulate API call (replace with actual API endpoint)
+                const response = await fetch('/api/v1/detect', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: text })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    displayResults(result);
+                } else {
+                    // Fallback demo results if API is not available
+                    displayDemoResults(text);
+                }
+            } catch (error) {
+                // Fallback demo results
+                displayDemoResults(text);
+            }
+
+            loadingIndicator.style.display = 'none';
+        });
+
+        function displayDemoResults(text) {
+            // Simulate PII detection results
+            const detectedEntities = [];
+            
+            // Email detection
+            const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
+            const emails = text.match(emailRegex);
+            if (emails) {
+                emails.forEach(email => {
+                    detectedEntities.push({
+                        type: 'EMAIL',
+                        value: email,
+                        category: 'Direct Identifiers'
+                    });
+                });
+            }
+
+            // Phone number detection
+            const phoneRegex = /(\+91[- ]?)?[789]\d{9}/g;
+            const phones = text.match(phoneRegex);
+            if (phones) {
+                phones.forEach(phone => {
+                    detectedEntities.push({
+                        type: 'PHONE',
+                        value: phone,
+                        category: 'Direct Identifiers'
+                    });
+                });
+            }
+
+            // Aadhaar detection
+            const aadhaarRegex = /\d{4}-\d{4}-\d{4}/g;
+            const aadhaars = text.match(aadhaarRegex);
+            if (aadhaars) {
+                aadhaars.forEach(aadhaar => {
+                    detectedEntities.push({
+                        type: 'AADHAAR',
+                        value: aadhaar,
+                        category: 'Direct Identifiers'
+                    });
+                });
+            }
+
+            const result = {
+                original_text: text,
+                detected_entities: {
+                    'Direct Identifiers': detectedEntities
+                },
+                total_entities: detectedEntities.length,
+                categories_found: detectedEntities.length > 0 ? ['Direct Identifiers'] : []
+            };
+
+            displayResults(result);
+        }
+
+        function displayResults(result) {
+            let html = '<h4>Detection Results:</h4>';
+            html += `<p><strong>Total entities found:</strong> ${result.total_entities || 0}</p>`;
+            html += `<p><strong>Text length:</strong> ${result.original_text ? result.original_text.length : 0} characters</p>`;
+
+            if (result.detected_entities && Object.keys(result.detected_entities).length > 0) {
+                html += '<h5>Detected PII:</h5>';
+                for (const [category, entities] of Object.entries(result.detected_entities)) {
+                    if (entities && entities.length > 0) {
+                        html += `<div style="margin-bottom: 1rem;">`;
+                        html += `<strong style="color: #667eea;">${category}:</strong>`;
+                        html += '<ul style="margin-left: 1rem; margin-top: 0.5rem;">';
+                        entities.forEach(entity => {
+                            html += `<li><strong>${entity.type}:</strong> ${entity.value}</li>`;
+                        });
+                        html += '</ul></div>';
+                    }
+                }
+            } else {
+                html += '<p style="color: #718096; font-style: italic;">No PII detected in the provided text.</p>';
+            }
+
+            resultContent.innerHTML = html;
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html> 
