@@ -1,0 +1,2051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blurred.ai — PII Detection API</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #f0f0f0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, #e8e8e8 0%, #f0f0f0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            color: #1a1a1a;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: #666;
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.875rem 1.75rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #333;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #1a1a1a;
+            border: 1px solid #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f8f8;
+            border-color: #ccc;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            background: #f0f0f0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: #e0e0e0;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #d0d0d0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #1a1a1a;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        /* Solutions Section */
+        .solutions {
+            padding: 5rem 2rem;
+            background: #e8e8e8;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (min-width: 768px) {
+            .solutions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .solutions-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .solution-card {
+            background: #f8f8f8;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #f0f0f0;
+            text-align: center;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .solution-icon {
+            width: 64px;
+            height: 64px;
+            background: #1a1a1a;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .solution-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .solution-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .solution-features {
+            list-style: none;
+            text-align: left;
+            margin: 0;
+            padding: 0;
+        }
+
+        .solution-features li {
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .solution-features li:before {
+            content: "•";
+            color: #1a1a1a;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Plans Section */
+        /*
+        .plans {
+            padding: 5rem 2rem;
+            background: #f8f8f8;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .plan-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #f0f0f0;
+            position: relative;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .plan-card.featured {
+            border: 2px solid #1a1a1a;
+            transform: scale(1.02);
+        }
+
+        .plan-card.featured:hover {
+            transform: scale(1.02) translateY(-2px);
+        }
+
+        .plan-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-period {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .plan-features li:before {
+            content: "✓";
+            color: #1a1a1a;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .plan-button {
+            width: 100%;
+            padding: 0.875rem 1.75rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .plan-button.primary {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .plan-button.primary:hover {
+            background: #333;
+        }
+
+        .plan-button.secondary {
+            background: transparent;
+            color: #1a1a1a;
+            border: 1px solid #e0e0e0;
+        }
+
+        .plan-button.secondary:hover {
+            background: #f8f8f8;
+            border-color: #ccc;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a1a;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        */
+
+        /* API Demo Section */
+        .demo {
+            padding: 5rem 2rem;
+            background: #f8f8f8;
+        }
+
+        .demo-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f0f0f0;
+        }
+
+        .demo-tabs {
+            display: flex;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 2rem;
+            justify-content: space-between;
+        }
+
+        .demo-tab {
+            flex: 1;
+            padding: 0.75rem 0.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #666;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .demo-tab.active {
+            color: #1a1a1a;
+            border-bottom-color: #1a1a1a;
+        }
+
+        .demo-tab:hover {
+            color: #1a1a1a;
+        }
+
+        .demo-tab-content {
+            display: none;
+        }
+
+        .demo-tab-content.active {
+            display: block;
+        }
+
+        .demo-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+        }
+
+        .demo-input:focus {
+            outline: none;
+            border-color: #1a1a1a;
+        }
+
+        .file-upload-area {
+            border: 2px dashed #e0e0e0;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+            cursor: pointer;
+        }
+
+        .file-upload-area:hover {
+            border-color: #1a1a1a;
+        }
+
+        .file-upload-area.dragover {
+            border-color: #1a1a1a;
+            background: #f8f8f8;
+        }
+
+        .file-upload-icon {
+            font-size: 2rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .file-upload-text {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload-hint {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .file-info {
+            background: #f8f8f8;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .file-info.show {
+            display: block;
+        }
+
+        .file-info h4 {
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+            font-size: 0.9rem;
+        }
+
+        .file-info p {
+            color: #666;
+            font-size: 0.8rem;
+            margin: 0.25rem 0;
+        }
+
+        .demo-output {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Inter', monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            min-height: 100px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 2rem;
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .contact-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            background: #333;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .contact-details h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .contact-details p {
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .contact-form {
+            background: #333;
+            padding: 2rem;
+            border-radius: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: white;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem;
+            border: 1px solid #555;
+            border-radius: 8px;
+            background: #444;
+            color: white;
+            font-size: 0.9rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .form-input::placeholder {
+            color: #999;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.875rem 1.75rem;
+            background: white;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #f0f0f0;
+            transform: translateY(-1px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            color: #ccc;
+            font-size: 1.25rem;
+            transition: color 0.2s;
+        }
+
+        .social-links a:hover {
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background: #111;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer p {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact-info {
+                order: 2;
+            }
+
+            .contact-form {
+                order: 1;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #1a1a1a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Simple animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">Blurred.ai</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#solutions">Solutions</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content fade-in">
+            <h1>"Because Not Everything Should Be Seen."</h1>
+            <p class="hero-subtitle">
+                Detect and redact personally identifiable information with DPDP Act compliance. 
+                Simple, fast, and secure.
+            </p>
+            <div class="cta-buttons">
+                <a href="#demo" class="btn btn-primary">Try Demo</a>
+                <a href="#features" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Why Blurred.ai?</h2>
+            <p class="section-subtitle">
+                Built for developers who need reliable PII detection without the complexity
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>DPDP Compliant</h3>
+                    <p>
+                        Built-in compliance with India's Digital Personal Data Protection Act. 
+                        Process data with confidence knowing you meet regulatory requirements.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h3>Custom Detection</h3>
+                    <p>
+                        Create organization-specific PII patterns and custom categories. 
+                        Tailor detection rules to your unique data requirements.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>20+ PII Types</h3>
+                    <p>
+                        Detect emails, phone numbers, government IDs, addresses, bank details, 
+                        and sensitive personal information with high accuracy.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Fast & Scalable</h3>
+                    <p>
+                        Process thousands of documents efficiently with batch processing 
+                        and real-time API responses under 100ms.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Developer First</h3>
+                    <p>
+                        RESTful API with comprehensive documentation and multiple SDKs. 
+                        Easy integration with your existing systems.
+                    </p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Enterprise Security</h3>
+                    <p>
+                        SOC 2 compliant with end-to-end encryption. Your data never leaves 
+                        your secure environment.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section id="solutions" class="solutions">
+        <div class="container">
+            <h2 class="section-title">Our Solutions</h2>
+            <p class="section-subtitle">
+                Comprehensive PII detection and redaction across all data types
+            </p>
+            
+            <div class="solutions-grid">
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <h3>TextBlur</h3>
+                    <p>
+                        Advanced text analysis with intelligent PII detection and redaction. 
+                        Process documents, emails, and any text-based content.
+                    </p>
+                    <ul class="solution-features">
+                        <li>20+ PII types detected</li>
+                        <li>Custom pattern recognition</li>
+                        <li>Batch processing support</li>
+                        <li>Real-time API responses</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3>ImageBlur</h3>
+                    <p>
+                        Visual PII detection and blurring in images and photos. 
+                        Automatically identify and mask sensitive information.
+                    </p>
+                    <ul class="solution-features">
+                        <li>OCR-based text detection</li>
+                        <li>Face and license plate blurring</li>
+                        <li>Multiple output formats</li>
+                        <li>High-resolution support</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">
+                        <i class="fas fa-video"></i>
+            </div>
+                    <h3>VideoBlur</h3>
+                    <p>
+                        Real-time video processing with PII detection and masking. 
+                        Perfect for live streams and recorded content.
+                    </p>
+                    <ul class="solution-features">
+                        <li>Real-time processing</li>
+                        <li>Multiple video formats</li>
+                        <li>Custom blur effects</li>
+                        <li>Batch video processing</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3>AudioBlur</h3>
+                    <p>
+                        Audio PII detection and redaction. Identify and mask sensitive 
+                        information in audio recordings and transcripts.
+                    </p>
+                    <ul class="solution-features">
+                        <li>Speech-to-text processing</li>
+                        <li>Audio redaction tools</li>
+                        <li>Multiple audio formats</li>
+                        <li>Transcript generation</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>DatabaseBlur</h3>
+                    <p>
+                        Database PII detection and masking. Scan and redact sensitive 
+                        information across your database systems.
+                    </p>
+                    <ul class="solution-features">
+                        <li>Multi-database support</li>
+                        <li>Schema-aware scanning</li>
+                        <li>Bulk data processing</li>
+                        <li>Compliance reporting</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card fade-in">
+                    <div class="solution-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>DocumentBlur</h3>
+                    <p>
+                        Document PII detection and redaction. Process PDFs, Word docs, 
+                        and other document formats with intelligent redaction.
+                    </p>
+                    <ul class="solution-features">
+                        <li>Multi-format support</li>
+                        <li>OCR text extraction</li>
+                        <li>Batch processing</li>
+                        <li>Redacted output</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plans Section -->
+    <!--
+    <section id="plans" class="plans">
+        <div class="container">
+            <h2 class="section-title">Choose Your Plan</h2>
+            <p class="section-subtitle">
+                Start with Basic or scale up to Enterprise. All plans include DPDP compliance.
+            </p>
+            
+            <div class="plans-grid">
+                <div class="plan-card fade-in">
+                    <div class="plan-header">
+                        <h3 class="plan-name">Basic</h3>
+                        <div class="plan-price">$29</div>
+                        <div class="plan-period">per month</div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>5 datapoints detected</li>
+                        <li>Basic English language model</li>
+                        <li>Basic model</li>
+                        <li>Standard API access</li>
+                        <li>Basic documentation</li>
+                    </ul>
+                    <a href="#" class="plan-button secondary">Get Started</a>
+                </div>
+
+                <div class="plan-card featured fade-in">
+                    <div class="featured-badge">Most Popular</div>
+                    <div class="plan-header">
+                        <h3 class="plan-name">Pro</h3>
+                        <div class="plan-price">$99</div>
+                        <div class="plan-period">per month</div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>20+ datapoints detected</li>
+                        <li>English language model</li>
+                        <li>Base and medium size model</li>
+                        <li>Priority API access</li>
+                        <li>Email support</li>
+                        <li>Batch processing</li>
+                    </ul>
+                    <a href="#" class="plan-button primary">Get Started</a>
+                </div>
+
+                <div class="plan-card fade-in">
+                    <div class="plan-header">
+                        <h3 class="plan-name">Enterprise</h3>
+                        <div class="plan-price">Custom</div>
+                        <div class="plan-period">contact us</div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Custom tagging system</li>
+                        <li>Custom features</li>
+                        <li>Multi-language detection</li>
+                        <li>Priority phone & email support</li>
+                        <li>Real-time API access</li>
+                        <li>Advanced analytics</li>
+                        <li>On-premise deployment</li>
+                        <li>SLA guarantees</li>
+                        <li>Dedicated account manager</li>
+                    </ul>
+                    <a href="#" class="plan-button secondary">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    -->
+
+    <!-- API Demo Section -->
+    <section id="demo" class="demo">
+        <div class="demo-content">
+            <h2 class="section-title">Try It Now</h2>
+            <p class="section-subtitle">
+                See our PII detection in action with this live demo
+            </p>
+            
+            <div class="demo-card">
+                <div class="demo-tabs">
+                    <button class="demo-tab active" data-tab="text">
+                        <i class="fas fa-font"></i> Text
+                    </button>
+                    <button class="demo-tab" data-tab="image">
+                        <i class="fas fa-image"></i> Image
+                    </button>
+                    <button class="demo-tab" data-tab="video">
+                        <i class="fas fa-video"></i> Video
+                    </button>
+                    <button class="demo-tab" data-tab="audio">
+                        <i class="fas fa-microphone"></i> Audio
+                    </button>
+                    <button class="demo-tab" data-tab="document">
+                        <i class="fas fa-file-alt"></i> Document
+                    </button>
+                    <button class="demo-tab" data-tab="database">
+                        <i class="fas fa-database"></i> Database
+                    </button>
+                </div>
+
+                <!-- Text Tab -->
+                <div id="text-tab" class="demo-tab-content active">
+                    <h3 style="margin-bottom: 1rem; color: #1a1a1a;">Text PII Detection</h3>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">
+                    Enter text containing PII to see our detection system in action:
+                </p>
+                
+                <textarea 
+                    id="demoInput" 
+                    class="demo-input" 
+                    rows="4" 
+                        placeholder="Example: My email is john.doe@example.com and my phone number is +91-9876543210. My Aadhaar number is 1234-5678-9012."
+                ></textarea>
+                
+                <button id="detectBtn" class="btn btn-primary" style="margin-bottom: 1rem;">
+                    <i class="fas fa-search"></i> Detect PII
+                </button>
+                </div>
+
+                <!-- Image Tab -->
+                <div id="image-tab" class="demo-tab-content">
+                    <h3 style="margin-bottom: 1rem; color: #1a1a1a;">Image PII Detection</h3>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">
+                        Upload an image or capture one using your camera:
+                    </p>
+                    
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <button id="imageUploadBtn" class="btn btn-secondary" style="flex: 1;">
+                            <i class="fas fa-cloud-upload-alt"></i> Upload Image
+                        </button>
+                        <button id="imageCaptureBtn" class="btn btn-secondary" style="flex: 1;">
+                            <i class="fas fa-camera"></i> Take Photo
+                        </button>
+                    </div>
+                    
+                    <div class="file-upload-area" id="imageUpload" style="display: none;">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="file-upload-text">Click to upload or drag and drop</div>
+                        <div class="file-upload-hint">Supports JPEG, PNG (Max 5MB)</div>
+                        <input type="file" id="imageFile" accept=".jpg,.jpeg,.png" style="display: none;">
+                    </div>
+                    
+                    <div class="camera-area" id="imageCamera" style="display: none;">
+                        <video id="imageVideo" autoplay style="width: 100%; border-radius: 8px; margin-bottom: 1rem;"></video>
+                        <div style="display: flex; gap: 1rem;">
+                            <button id="imageCapturePhotoBtn" class="btn btn-primary">
+                                <i class="fas fa-camera"></i> Capture Photo
+                            </button>
+                            <button id="imageStopCameraBtn" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Stop Camera
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <canvas id="imageCanvas" style="display: none; width: 100%; border-radius: 8px; margin-bottom: 1rem;"></canvas>
+                    
+                    <div class="file-info" id="imageInfo">
+                        <h4>Selected File:</h4>
+                        <p id="imageFileName"></p>
+                        <p id="imageFileSize"></p>
+                    </div>
+                    
+                    <button id="imageDetectBtn" class="btn btn-primary" style="margin-bottom: 1rem; display: none;">
+                        <i class="fas fa-search"></i> Detect PII
+                    </button>
+                </div>
+
+                <!-- Video Tab -->
+                <div id="video-tab" class="demo-tab-content">
+                    <h3 style="margin-bottom: 1rem; color: #1a1a1a;">Video PII Detection</h3>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">
+                        Upload a video or record one using your camera:
+                    </p>
+                    
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <button id="videoUploadBtn" class="btn btn-secondary" style="flex: 1;">
+                            <i class="fas fa-cloud-upload-alt"></i> Upload Video
+                        </button>
+                        <button id="videoRecordBtn" class="btn btn-secondary" style="flex: 1;">
+                            <i class="fas fa-video"></i> Record Video
+                        </button>
+                    </div>
+                    
+                    <div class="file-upload-area" id="videoUpload" style="display: none;">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="file-upload-text">Click to upload or drag and drop</div>
+                        <div class="file-upload-hint">Supports MP4 (Max 1MB)</div>
+                        <input type="file" id="videoFile" accept=".mp4" style="display: none;">
+                    </div>
+                    
+                    <div class="camera-area" id="videoCamera" style="display: none;">
+                        <video id="videoPreview" autoplay style="width: 100%; border-radius: 8px; margin-bottom: 1rem;"></video>
+                        <div style="display: flex; gap: 1rem;">
+                            <button id="videoStartRecordBtn" class="btn btn-primary">
+                                <i class="fas fa-circle"></i> Start Recording
+                            </button>
+                            <button id="videoStopRecordBtn" class="btn btn-secondary" style="display: none;">
+                                <i class="fas fa-stop"></i> Stop Recording
+                            </button>
+                            <button id="videoStopCameraBtn" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Stop Camera
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <video id="videoRecording" controls style="display: none; width: 100%; border-radius: 8px; margin-bottom: 1rem;"></video>
+                    
+                    <div class="file-info" id="videoInfo">
+                        <h4>Selected File:</h4>
+                        <p id="videoFileName"></p>
+                        <p id="videoFileSize"></p>
+                    </div>
+                    
+                    <button id="videoDetectBtn" class="btn btn-primary" style="margin-bottom: 1rem; display: none;">
+                        <i class="fas fa-search"></i> Detect PII
+                    </button>
+                </div>
+
+                <!-- Audio Tab -->
+                <div id="audio-tab" class="demo-tab-content">
+                    <h3 style="margin-bottom: 1rem; color: #1a1a1a;">Audio PII Detection</h3>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">
+                        Upload an audio file or record one using your microphone:
+                    </p>
+                    
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <button id="audioUploadBtn" class="btn btn-secondary" style="flex: 1;">
+                            <i class="fas fa-cloud-upload-alt"></i> Upload Audio
+                        </button>
+                        <button id="audioRecordBtn" class="btn btn-secondary" style="flex: 1;">
+                            <i class="fas fa-microphone"></i> Record Audio
+                        </button>
+                    </div>
+                    
+                    <div class="file-upload-area" id="audioUpload" style="display: none;">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="file-upload-text">Click to upload or drag and drop</div>
+                        <div class="file-upload-hint">Supports MP3 (Max 1MB)</div>
+                        <input type="file" id="audioFile" accept=".mp3" style="display: none;">
+                    </div>
+                    
+                    <div class="camera-area" id="audioCamera" style="display: none;">
+                        <div style="text-align: center; padding: 2rem; background: #f8f8f8; border-radius: 8px; margin-bottom: 1rem;">
+                            <div class="file-upload-icon">
+                                <i class="fas fa-microphone"></i>
+                            </div>
+                            <div class="file-upload-text">Microphone Access</div>
+                            <div class="file-upload-hint">Click to start recording</div>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button id="audioStartRecordBtn" class="btn btn-primary">
+                                <i class="fas fa-circle"></i> Start Recording
+                            </button>
+                            <button id="audioStopRecordBtn" class="btn btn-secondary" style="display: none;">
+                                <i class="fas fa-stop"></i> Stop Recording
+                            </button>
+                            <button id="audioStopCameraBtn" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Stop Microphone
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <audio id="audioRecording" controls style="display: none; width: 100%; margin-bottom: 1rem;"></audio>
+                    
+                    <div class="file-info" id="audioInfo">
+                        <h4>Selected File:</h4>
+                        <p id="audioFileName"></p>
+                        <p id="audioFileSize"></p>
+                    </div>
+                    
+                    <button id="audioDetectBtn" class="btn btn-primary" style="margin-bottom: 1rem; display: none;">
+                        <i class="fas fa-search"></i> Detect PII
+                    </button>
+                </div>
+
+                <!-- Document Tab -->
+                <div id="document-tab" class="demo-tab-content">
+                    <h3 style="margin-bottom: 1rem; color: #1a1a1a;">Document PII Detection</h3>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">
+                        Upload a document to detect and redact PII content:
+                    </p>
+                    
+                    <div class="file-upload-area" id="documentUpload">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="file-upload-text">Click to upload or drag and drop</div>
+                        <div class="file-upload-hint">Supports PDF, DOC, DOCX, TXT (Max 10MB)</div>
+                        <input type="file" id="documentFile" accept=".pdf,.doc,.docx,.txt" style="display: none;">
+                    </div>
+                    
+                    <div class="file-info" id="documentInfo">
+                        <h4>Selected File:</h4>
+                        <p id="documentFileName"></p>
+                        <p id="documentFileSize"></p>
+                    </div>
+                    
+                    <button id="documentDetectBtn" class="btn btn-primary" style="margin-bottom: 1rem; display: none;">
+                        <i class="fas fa-search"></i> Detect PII
+                    </button>
+                </div>
+
+                <!-- Database Tab -->
+                <div id="database-tab" class="demo-tab-content">
+                    <h3 style="margin-bottom: 1rem; color: #1a1a1a;">Database PII Detection</h3>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">
+                        Connect to your database or upload a sample dataset:
+                    </p>
+                    
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <button id="databaseConnectBtn" class="btn btn-secondary" style="flex: 1;">
+                            <i class="fas fa-plug"></i> Connect Database
+                        </button>
+                        <button id="databaseUploadBtn" class="btn btn-secondary" style="flex: 1;">
+                            <i class="fas fa-upload"></i> Upload Dataset
+                        </button>
+                    </div>
+                    
+                    <div class="file-upload-area" id="databaseUpload" style="display: none;">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="file-upload-text">Click to upload or drag and drop</div>
+                        <div class="file-upload-hint">Supports CSV, JSON, SQL (Max 5MB)</div>
+                        <input type="file" id="databaseFile" accept=".csv,.json,.sql" style="display: none;">
+                    </div>
+                    
+                    <div class="database-connection" id="databaseConnection" style="display: none;">
+                        <div style="background: #f8f8f8; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <h4 style="margin-bottom: 1rem; color: #1a1a1a;">Database Connection</h4>
+                            <div style="display: grid; gap: 1rem; grid-template-columns: 1fr 1fr;">
+                                <div>
+                                    <label style="display: block; margin-bottom: 0.5rem; color: #666; font-size: 0.9rem;">Database Type</label>
+                                    <select class="form-input" style="background: white; color: #1a1a1a;">
+                                        <option>PostgreSQL</option>
+                                        <option>MySQL</option>
+                                        <option>SQL Server</option>
+                                        <option>Oracle</option>
+                                        <option>SQLite</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="display: block; margin-bottom: 0.5rem; color: #666; font-size: 0.9rem;">Host</label>
+                                    <input type="text" class="form-input" placeholder="localhost" style="background: white; color: #1a1a1a;">
+                                </div>
+                                <div>
+                                    <label style="display: block; margin-bottom: 0.5rem; color: #666; font-size: 0.9rem;">Port</label>
+                                    <input type="text" class="form-input" placeholder="5432" style="background: white; color: #1a1a1a;">
+                                </div>
+                                <div>
+                                    <label style="display: block; margin-bottom: 0.5rem; color: #666; font-size: 0.9rem;">Database</label>
+                                    <input type="text" class="form-input" placeholder="mydb" style="background: white; color: #1a1a1a;">
+                                </div>
+                                <div>
+                                    <label style="display: block; margin-bottom: 0.5rem; color: #666; font-size: 0.9rem;">Username</label>
+                                    <input type="text" class="form-input" placeholder="username" style="background: white; color: #1a1a1a;">
+                                </div>
+                                <div>
+                                    <label style="display: block; margin-bottom: 0.5rem; color: #666; font-size: 0.9rem;">Password</label>
+                                    <input type="password" class="form-input" placeholder="password" style="background: white; color: #1a1a1a;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="file-info" id="databaseInfo">
+                        <h4>Selected File:</h4>
+                        <p id="databaseFileName"></p>
+                        <p id="databaseFileSize"></p>
+                    </div>
+                    
+                    <button id="databaseDetectBtn" class="btn btn-primary" style="margin-bottom: 1rem; display: none;">
+                        <i class="fas fa-search"></i> Detect PII
+                    </button>
+                </div>
+
+                <!-- Output Area -->
+                <div id="demoOutput" class="demo-output" style="display: none;">
+                    <div id="loadingIndicator" style="display: none;">
+                        <div class="loading"></div> Processing...
+                    </div>
+                    <div id="resultContent"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-content">
+            <h2 class="section-title" style="color: white;">Get in Touch</h2>
+            <p class="section-subtitle" style="color: #ccc;">
+                Ready to protect your data? Let's discuss how Blurred.ai can help your organization.
+            </p>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>hello@blurred.ai</p>
+                        </div>
+            </div>
+                
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Phone</h4>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                </div>
+                
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Office</h4>
+                            <p>123 Privacy Street<br>San Francisco, CA 94105</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Business Hours</h4>
+                            <p>Monday - Friday<br>9:00 AM - 6:00 PM PST</p>
+                        </div>
+                    </div>
+                    
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+                
+                <div class="contact-form">
+                    <h3 style="margin-bottom: 1.5rem; color: white;">Send us a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" class="form-input" placeholder="Your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-input" placeholder="your.email@company.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <input type="text" id="company" class="form-input" placeholder="Your company">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-input form-textarea" placeholder="Tell us about your PII detection needs..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2025 Blurred.ai. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Tab functionality
+        const tabs = document.querySelectorAll('.demo-tab');
+        const tabContents = document.querySelectorAll('.demo-tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.getAttribute('data-tab');
+                
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.getElementById(`${targetTab}-tab`).classList.add('active');
+                
+                // Hide output when switching tabs
+                document.getElementById('demoOutput').style.display = 'none';
+            });
+        });
+
+        // File upload functionality
+        function setupFileUpload(uploadAreaId, fileInputId, infoId, fileNameId, fileSizeId, detectBtnId, maxSize) {
+            const uploadArea = document.getElementById(uploadAreaId);
+            const fileInput = document.getElementById(fileInputId);
+            const info = document.getElementById(infoId);
+            const fileName = document.getElementById(fileNameId);
+            const fileSize = document.getElementById(fileSizeId);
+            const detectBtn = document.getElementById(detectBtnId);
+
+            uploadArea.addEventListener('click', () => fileInput.click());
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFileSelect(files[0]);
+                }
+            });
+            
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileSelect(e.target.files[0]);
+                }
+            });
+            
+            function handleFileSelect(file) {
+                const sizeInMB = file.size / (1024 * 1024);
+                
+                if (sizeInMB > maxSize) {
+                    alert(`File size must be under ${maxSize}MB`);
+                    return;
+                }
+                
+                fileName.textContent = `Name: ${file.name}`;
+                fileSize.textContent = `Size: ${sizeInMB.toFixed(2)} MB`;
+                info.classList.add('show');
+                detectBtn.style.display = 'inline-block';
+            }
+            
+            detectBtn.addEventListener('click', () => {
+                if (fileInput.files.length > 0) {
+                    processFile(fileInput.files[0], detectBtnId);
+                } else if (window[`${detectBtnId.replace('DetectBtn', '')}CapturedFile`]) {
+                    processFile(window[`${detectBtnId.replace('DetectBtn', '')}CapturedFile`], detectBtnId);
+                }
+            });
+        }
+
+        // Setup file uploads
+        setupFileUpload('imageUpload', 'imageFile', 'imageInfo', 'imageFileName', 'imageFileSize', 'imageDetectBtn', 5);
+        setupFileUpload('videoUpload', 'videoFile', 'videoInfo', 'videoFileName', 'videoFileSize', 'videoDetectBtn', 1);
+        setupFileUpload('audioUpload', 'audioFile', 'audioInfo', 'audioFileName', 'audioFileSize', 'audioDetectBtn', 1);
+        setupFileUpload('documentUpload', 'documentFile', 'documentInfo', 'documentFileName', 'documentFileSize', 'documentDetectBtn', 10);
+        setupFileUpload('databaseUpload', 'databaseFile', 'databaseInfo', 'databaseFileName', 'databaseFileSize', 'databaseDetectBtn', 5);
+
+        // Database tab functionality
+        document.getElementById('databaseConnectBtn').addEventListener('click', () => {
+            document.getElementById('databaseConnection').style.display = 'block';
+            document.getElementById('databaseUpload').style.display = 'none';
+        });
+
+        document.getElementById('databaseUploadBtn').addEventListener('click', () => {
+            document.getElementById('databaseConnection').style.display = 'none';
+            document.getElementById('databaseUpload').style.display = 'block';
+        });
+
+        // Camera and microphone functionality
+        let imageStream = null;
+        let videoStream = null;
+        let audioStream = null;
+        let mediaRecorder = null;
+        let recordedChunks = [];
+
+        // Image capture functionality
+        document.getElementById('imageUploadBtn').addEventListener('click', () => {
+            document.getElementById('imageUpload').style.display = 'block';
+            document.getElementById('imageCamera').style.display = 'none';
+            document.getElementById('imageCanvas').style.display = 'none';
+        });
+
+        document.getElementById('imageCaptureBtn').addEventListener('click', async () => {
+            try {
+                imageStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                document.getElementById('imageVideo').srcObject = imageStream;
+                document.getElementById('imageUpload').style.display = 'none';
+                document.getElementById('imageCamera').style.display = 'block';
+                document.getElementById('imageCanvas').style.display = 'none';
+            } catch (error) {
+                alert('Camera access denied. Please allow camera permissions.');
+            }
+        });
+
+        document.getElementById('imageCapturePhotoBtn').addEventListener('click', () => {
+            const video = document.getElementById('imageVideo');
+            const canvas = document.getElementById('imageCanvas');
+            const context = canvas.getContext('2d');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0);
+            
+            canvas.style.display = 'block';
+            document.getElementById('imageCamera').style.display = 'none';
+            
+            // Convert canvas to blob
+            canvas.toBlob((blob) => {
+                const file = new File([blob], 'captured-image.jpg', { type: 'image/jpeg' });
+                handleCapturedFile(file, 'image');
+            }, 'image/jpeg');
+        });
+
+        document.getElementById('imageStopCameraBtn').addEventListener('click', () => {
+            if (imageStream) {
+                imageStream.getTracks().forEach(track => track.stop());
+                imageStream = null;
+            }
+            document.getElementById('imageCamera').style.display = 'none';
+            document.getElementById('imageUpload').style.display = 'none';
+        });
+
+        // Video recording functionality
+        document.getElementById('videoUploadBtn').addEventListener('click', () => {
+            document.getElementById('videoUpload').style.display = 'block';
+            document.getElementById('videoCamera').style.display = 'none';
+            document.getElementById('videoRecording').style.display = 'none';
+        });
+
+        document.getElementById('videoRecordBtn').addEventListener('click', async () => {
+            try {
+                videoStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                document.getElementById('videoPreview').srcObject = videoStream;
+                document.getElementById('videoUpload').style.display = 'none';
+                document.getElementById('videoCamera').style.display = 'block';
+                document.getElementById('videoRecording').style.display = 'none';
+            } catch (error) {
+                alert('Camera access denied. Please allow camera and microphone permissions.');
+            }
+        });
+
+        document.getElementById('videoStartRecordBtn').addEventListener('click', () => {
+            recordedChunks = [];
+            mediaRecorder = new MediaRecorder(videoStream);
+            
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    recordedChunks.push(event.data);
+                }
+            };
+            
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(recordedChunks, { type: 'video/mp4' });
+                const file = new File([blob], 'recorded-video.mp4', { type: 'video/mp4' });
+                handleCapturedFile(file, 'video');
+            };
+            
+            mediaRecorder.start();
+            document.getElementById('videoStartRecordBtn').style.display = 'none';
+            document.getElementById('videoStopRecordBtn').style.display = 'inline-block';
+        });
+
+        document.getElementById('videoStopRecordBtn').addEventListener('click', () => {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                document.getElementById('videoStartRecordBtn').style.display = 'inline-block';
+                document.getElementById('videoStopRecordBtn').style.display = 'none';
+                document.getElementById('videoCamera').style.display = 'none';
+                document.getElementById('videoRecording').style.display = 'block';
+            }
+        });
+
+        document.getElementById('videoStopCameraBtn').addEventListener('click', () => {
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+                videoStream = null;
+            }
+            document.getElementById('videoCamera').style.display = 'none';
+            document.getElementById('videoUpload').style.display = 'none';
+        });
+
+        // Audio recording functionality
+        document.getElementById('audioUploadBtn').addEventListener('click', () => {
+            document.getElementById('audioUpload').style.display = 'block';
+            document.getElementById('audioCamera').style.display = 'none';
+            document.getElementById('audioRecording').style.display = 'none';
+        });
+
+        document.getElementById('audioRecordBtn').addEventListener('click', async () => {
+            try {
+                audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                document.getElementById('audioUpload').style.display = 'none';
+                document.getElementById('audioCamera').style.display = 'block';
+                document.getElementById('audioRecording').style.display = 'none';
+            } catch (error) {
+                alert('Microphone access denied. Please allow microphone permissions.');
+            }
+        });
+
+        document.getElementById('audioStartRecordBtn').addEventListener('click', () => {
+            recordedChunks = [];
+            mediaRecorder = new MediaRecorder(audioStream);
+            
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    recordedChunks.push(event.data);
+                }
+            };
+            
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(recordedChunks, { type: 'audio/mp3' });
+                const file = new File([blob], 'recorded-audio.mp3', { type: 'audio/mp3' });
+                handleCapturedFile(file, 'audio');
+            };
+            
+            mediaRecorder.start();
+            document.getElementById('audioStartRecordBtn').style.display = 'none';
+            document.getElementById('audioStopRecordBtn').style.display = 'inline-block';
+        });
+
+        document.getElementById('audioStopRecordBtn').addEventListener('click', () => {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                document.getElementById('audioStartRecordBtn').style.display = 'inline-block';
+                document.getElementById('audioStopRecordBtn').style.display = 'none';
+                document.getElementById('audioCamera').style.display = 'none';
+                document.getElementById('audioRecording').style.display = 'block';
+            }
+        });
+
+        document.getElementById('audioStopCameraBtn').addEventListener('click', () => {
+            if (audioStream) {
+                audioStream.getTracks().forEach(track => track.stop());
+                audioStream = null;
+            }
+            document.getElementById('audioCamera').style.display = 'none';
+            document.getElementById('audioUpload').style.display = 'none';
+        });
+
+        function handleCapturedFile(file, type) {
+            const sizeInMB = file.size / (1024 * 1024);
+            const maxSize = type === 'image' ? 5 : 1;
+            
+            if (sizeInMB > maxSize) {
+                alert(`File size must be under ${maxSize}MB`);
+                return;
+            }
+            
+            const fileNameId = `${type}FileName`;
+            const fileSizeId = `${type}FileSize`;
+            const infoId = `${type}Info`;
+            const detectBtnId = `${type}DetectBtn`;
+            
+            document.getElementById(fileNameId).textContent = `Name: ${file.name}`;
+            document.getElementById(fileSizeId).textContent = `Size: ${sizeInMB.toFixed(2)} MB`;
+            document.getElementById(infoId).classList.add('show');
+            document.getElementById(detectBtnId).style.display = 'inline-block';
+            
+            // Store the file for processing
+            window[`${type}CapturedFile`] = file;
+        }
+
+        // Demo functionality for text
+        const demoInput = document.getElementById('demoInput');
+        const detectBtn = document.getElementById('detectBtn');
+        const demoOutput = document.getElementById('demoOutput');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const resultContent = document.getElementById('resultContent');
+
+        detectBtn.addEventListener('click', async () => {
+            const text = demoInput.value.trim();
+            if (!text) {
+                alert('Please enter some text to analyze');
+                return;
+            }
+
+            processText(text);
+        });
+
+        function processText(text) {
+            // Show loading
+            demoOutput.style.display = 'block';
+            loadingIndicator.style.display = 'block';
+            resultContent.innerHTML = '';
+
+            setTimeout(() => {
+                // Simulate API call
+                try {
+                    displayDemoResults(text);
+            } catch (error) {
+                displayDemoResults(text);
+                }
+                loadingIndicator.style.display = 'none';
+            }, 1000);
+        }
+
+        function processFile(file, buttonId) {
+            const demoOutput = document.getElementById('demoOutput');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const resultContent = document.getElementById('resultContent');
+
+            // Show loading
+            demoOutput.style.display = 'block';
+            loadingIndicator.style.display = 'block';
+            resultContent.innerHTML = '';
+
+            setTimeout(() => {
+                // Simulate file processing
+                const fileType = buttonId.replace('DetectBtn', '').toUpperCase();
+                const result = {
+                    original_file: file.name,
+                    detected_entities: {
+                        'Direct Identifiers': [
+                            {
+                                type: 'EMAIL',
+                                value: 'sample@example.com',
+                                category: 'Direct Identifiers'
+                            },
+                            {
+                                type: 'PHONE',
+                                value: '+91-9876543210',
+                                category: 'Direct Identifiers'
+                            }
+                        ]
+                    },
+                    total_entities: 2,
+                    categories_found: ['Direct Identifiers'],
+                    file_type: fileType
+                };
+
+                displayFileResults(result);
+            loadingIndicator.style.display = 'none';
+            }, 2000);
+        }
+
+        function displayDemoResults(text) {
+            // Simulate PII detection results
+            const detectedEntities = [];
+            
+            // Email detection
+            const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
+            const emails = text.match(emailRegex);
+            if (emails) {
+                emails.forEach(email => {
+                    detectedEntities.push({
+                        type: 'EMAIL',
+                        value: email,
+                        category: 'Direct Identifiers'
+                    });
+                });
+            }
+
+            // Phone number detection
+            const phoneRegex = /(\+91[- ]?)?[789]\d{9}/g;
+            const phones = text.match(phoneRegex);
+            if (phones) {
+                phones.forEach(phone => {
+                    detectedEntities.push({
+                        type: 'PHONE',
+                        value: phone,
+                        category: 'Direct Identifiers'
+                    });
+                });
+            }
+
+            // Aadhaar detection
+            const aadhaarRegex = /\d{4}-\d{4}-\d{4}/g;
+            const aadhaars = text.match(aadhaarRegex);
+            if (aadhaars) {
+                aadhaars.forEach(aadhaar => {
+                    detectedEntities.push({
+                        type: 'AADHAAR',
+                        value: aadhaar,
+                        category: 'Direct Identifiers'
+                    });
+                });
+            }
+
+            const result = {
+                original_text: text,
+                detected_entities: {
+                    'Direct Identifiers': detectedEntities
+                },
+                total_entities: detectedEntities.length,
+                categories_found: detectedEntities.length > 0 ? ['Direct Identifiers'] : []
+            };
+
+            displayResults(result);
+        }
+
+        function displayResults(result) {
+            let html = '<h4 style="color: #e0e0e0; margin-bottom: 1rem;">Detection Results:</h4>';
+            html += `<p style="margin-bottom: 0.5rem;"><strong>Total entities found:</strong> ${result.total_entities || 0}</p>`;
+            html += `<p style="margin-bottom: 1rem;"><strong>Text length:</strong> ${result.original_text ? result.original_text.length : 0} characters</p>`;
+
+            if (result.detected_entities && Object.keys(result.detected_entities).length > 0) {
+                html += '<h5 style="color: #e0e0e0; margin-bottom: 0.75rem;">Detected PII:</h5>';
+                for (const [category, entities] of Object.entries(result.detected_entities)) {
+                    if (entities && entities.length > 0) {
+                        html += `<div style="margin-bottom: 1rem;">`;
+                        html += `<strong style="color: #4a9eff;">${category}:</strong>`;
+                        html += '<ul style="margin-left: 1rem; margin-top: 0.5rem;">';
+                        entities.forEach(entity => {
+                            html += `<li><strong>${entity.type}:</strong> ${entity.value}</li>`;
+                        });
+                        html += '</ul></div>';
+                    }
+                }
+            } else {
+                html += '<p style="color: #999; font-style: italic;">No PII detected in the provided text.</p>';
+            }
+
+            resultContent.innerHTML = html;
+        }
+
+        function displayFileResults(result) {
+            let html = '<h4 style="color: #e0e0e0; margin-bottom: 1rem;">File Processing Results:</h4>';
+            html += `<p style="margin-bottom: 0.5rem;"><strong>File:</strong> ${result.original_file}</p>`;
+            html += `<p style="margin-bottom: 0.5rem;"><strong>Type:</strong> ${result.file_type}</p>`;
+            html += `<p style="margin-bottom: 1rem;"><strong>Total entities found:</strong> ${result.total_entities || 0}</p>`;
+
+            if (result.detected_entities && Object.keys(result.detected_entities).length > 0) {
+                html += '<h5 style="color: #e0e0e0; margin-bottom: 0.75rem;">Detected PII:</h5>';
+                for (const [category, entities] of Object.entries(result.detected_entities)) {
+                    if (entities && entities.length > 0) {
+                        html += `<div style="margin-bottom: 1rem;">`;
+                        html += `<strong style="color: #4a9eff;">${category}:</strong>`;
+                        html += '<ul style="margin-left: 1rem; margin-top: 0.5rem;">';
+                        entities.forEach(entity => {
+                            html += `<li><strong>${entity.type}:</strong> ${entity.value}</li>`;
+                        });
+                        html += '</ul></div>';
+                    }
+                }
+            } else {
+                html += '<p style="color: #999; font-style: italic;">No PII detected in the uploaded file.</p>';
+            }
+
+            resultContent.innerHTML = html;
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all feature cards, solution cards, and plan cards
+        document.querySelectorAll('.feature-card, .solution-card, .plan-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Contact form functionality
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const company = document.getElementById('company').value;
+                const message = document.getElementById('message').value;
+                
+                // Here you would typically send the data to your backend
+                console.log('Contact form submitted:', { name, email, company, message });
+                
+                // Show success message (you can customize this)
+                alert('Thank you for your message! We\'ll get back to you soon.');
+                
+                // Reset form
+                this.reset();
+            });
+        }
+    </script>
+</body>
+</html> 
