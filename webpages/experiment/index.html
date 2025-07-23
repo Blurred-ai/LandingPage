@@ -564,14 +564,15 @@
     <section id="waitlist" class="contact">
         <div class="contact-content">
             <h2 class="section-title" style="color:white;">Join the Waitlist</h2>
-            <form class="contact-form">
+            <form class="contact-form" id="waitlist-form">
                 <div class="form-group">
                     <label for="waitlist-email">Email</label>
                     <input type="email" id="waitlist-email" class="form-input" placeholder="your@email.com" required>
                     </div>
                 <button type="submit" class="submit-btn">Join Waitlist</button>
-        </form>
-      </div>
+            </form>
+            <div id="waitlist-message" style="text-align:center;margin-top:1rem;"></div>
+        </div>
     </section>
     <script>
         // Smooth scroll for all anchor links
@@ -614,6 +615,34 @@
                         btn.textContent = 'Learn More';
                     }
                 });
+            });
+            // Waitlist form submission
+            document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                var email = document.getElementById('waitlist-email').value;
+                var messageDiv = document.getElementById('waitlist-message');
+                // --- EmailJS or backend integration placeholder ---
+                // Replace this with your backend API call or EmailJS integration
+                // Example using EmailJS (uncomment and configure):
+                /*
+                emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+                    to_email: 'hemantrak05@gmail.com',
+                    from_email: email
+                }, 'YOUR_USER_ID')
+                .then(function(response) {
+                    messageDiv.textContent = 'Thank you! You have been added to the waitlist.';
+                    messageDiv.style.color = 'lightgreen';
+                }, function(error) {
+                    messageDiv.textContent = 'Sorry, there was an error. Please try again later.';
+                    messageDiv.style.color = 'red';
+                });
+                */
+                // For now, just show a success message (simulate):
+                setTimeout(function() {
+                    messageDiv.textContent = 'Thank you! You have been added to the waitlist.';
+                    messageDiv.style.color = 'lightgreen';
+                    document.getElementById('waitlist-form').reset();
+                }, 800);
             });
         });
     </script>
