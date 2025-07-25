@@ -1,567 +1,695 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>8lur.com</title>
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #f5f5f5;
-            color: #1a1a1a;
-            margin: 0;
-            padding: 0;
-        }
-        .header {
-            background: rgba(255,255,255,0.95);
-            border-bottom: 1px solid #f0f0f0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            padding: 1rem 0;
-        }
-        .nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1a1a1a;
-            text-decoration: none;
-        }
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            align-items: center;
-            position: relative;
-        }
-        .nav-links a {
-            color: #666;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: color 0.2s, background 0.2s;
-            padding: 0.5rem 1.2rem;
-            border-radius: 6px;
-        }
-        .nav-links a:hover {
-            color: #1a1a1a;
-        }
-        .nav-links a.waitlist-btn {
-            background: #1a1a1a;
-            color: #fff !important;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: background 0.2s, color 0.2s;
-            border: 1px solid #1a1a1a;
-        }
-        .nav-links a.waitlist-btn:hover {
-            background: #333;
-            color: #fff !important;
-            border-color: #333;
-        }
-        /* Hamburger menu styles */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            width: 32px;
-            height: 32px;
-            justify-content: center;
-            align-items: center;
-        }
-        .hamburger span {
-            height: 4px;
-            width: 100%;
-            background: #1a1a1a;
-            margin: 4px 0;
-            border-radius: 2px;
-            transition: 0.3s;
-        }
-        /* Responsive images */
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-        /* Responsive container */
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        background: #f5f5f5;
+        color: #1a1a1a;
+        margin: 0;
+        padding: 0;
+      }
+      .header {
+        background: rgba(255, 255, 255, 0.95);
+        border-bottom: 1px solid #f0f0f0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        padding: 1rem 0;
+      }
+      .nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+      }
+      .logo {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        text-decoration: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        align-items: center;
+        position: relative;
+      }
+      .nav-links a {
+        color: #666;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: color 0.2s, background 0.2s;
+        padding: 0.5rem 1.2rem;
+        border-radius: 6px;
+      }
+      .nav-links a:hover {
+        color: #1a1a1a;
+      }
+      .nav-links a.waitlist-btn {
+        background: #1a1a1a;
+        color: #fff !important;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: background 0.2s, color 0.2s;
+        border: 1px solid #1a1a1a;
+      }
+      .nav-links a.waitlist-btn:hover {
+        background: #333;
+        color: #fff !important;
+        border-color: #333;
+      }
+      /* Hamburger menu styles */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        width: 32px;
+        height: 32px;
+        justify-content: center;
+        align-items: center;
+      }
+      .hamburger span {
+        height: 4px;
+        width: 100%;
+        background: #1a1a1a;
+        margin: 4px 0;
+        border-radius: 2px;
+        transition: 0.3s;
+      }
+      /* Responsive images */
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+      /* Responsive container */
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      /* Responsive font sizes */
+      .hero h1 {
+        font-size: clamp(2rem, 6vw, 3.5rem);
+      }
+      .section-title {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+      }
+      /* Responsive grid for features and solutions */
+      .features-grid,
+      .solutions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+      @media (max-width: 1200px) {
         .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-left: 1rem;
-            padding-right: 1rem;
+          max-width: 1000px;
         }
-        /* Responsive font sizes */
+      }
+      @media (max-width: 1024px) {
+        .nav {
+          padding: 0 1rem;
+        }
+        .features,
+        .solutions,
+        .contact {
+          padding: 3rem 1rem;
+        }
+      }
+      @media (max-width: 768px) {
         .hero h1 {
-            font-size: clamp(2rem, 6vw, 3.5rem);
-        }
-        .section-title {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-        }
-        /* Responsive grid for features and solutions */
-        .features-grid, .solutions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        @media (max-width: 1200px) {
-            .container {
-                max-width: 1000px;
-            }
-        }
-        @media (max-width: 1024px) {
-            .nav {
-                padding: 0 1rem;
-            }
-            .features, .solutions, .contact {
-                padding: 3rem 1rem;
-            }
-        }
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .hero-subtitle { font-size: 1rem; }
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 60px;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                width: 200px;
-                box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-                z-index: 1001;
-            }
-            .nav-links.active {
-                display: flex;
-            }
-            .hamburger {
-                display: flex;
-            }
-            .cta-buttons { flex-direction: column; align-items: center; }
-            .btn { width: 100%; max-width: 300px; }
-        }
-        @media (max-width: 480px) {
-            .hero {
-                padding: 6rem 0.5rem 2rem;
-            }
-            .features, .solutions, .contact {
-                padding: 2rem 0.5rem;
-            }
-            .section-title {
-                font-size: 1.2rem;
-            }
-        }
-        .hero {
-            padding: 8rem 2rem 4rem;
-            text-align: center;
-            background: linear-gradient(135deg, #e8e8e8 0%, #f0f0f0 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .hero-content {
-            max-width: 800px;
-        }
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            color: #1a1a1a;
+          font-size: 2.2rem;
         }
         .hero-subtitle {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            color: #666;
-            font-weight: 400;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+          font-size: 1rem;
+        }
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 60px;
+          right: 0;
+          background: white;
+          flex-direction: column;
+          width: 200px;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+          z-index: 1001;
+        }
+        .nav-links.active {
+          display: flex;
+        }
+        .hamburger {
+          display: flex;
         }
         .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
+          flex-direction: column;
+          align-items: center;
         }
         .btn {
-            padding: 0.875rem 1.75rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 500;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.2s;
-            cursor: pointer;
-            font-size: 0.9rem;
+          width: 100%;
+          max-width: 300px;
         }
-        .btn-secondary {
-            background: transparent;
-            color: #1a1a1a;
-            border: 1px solid #e0e0e0;
+      }
+      @media (max-width: 480px) {
+        .hero {
+          padding: 6rem 0.5rem 2rem;
         }
-        .btn-secondary:hover {
-            background: #f8f8f8;
-            border-color: #ccc;
-        }
-        .features {
-            padding: 5rem 2rem;
-            background: #f0f0f0;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        .feature-card {
-            background: #e0e0e0;
-            padding: 2rem;
-            border-radius: 12px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid #d0d0d0;
-        }
-        .feature-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: #1a1a1a;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            color: white;
-            font-size: 1.25rem;
-        }
-        .feature-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: #1a1a1a;
-        }
-        .feature-card p {
-            color: #666;
-            line-height: 1.6;
-            font-size: 0.9rem;
-        }
-        .solutions {
-            padding: 5rem 2rem;
-            background: #e8e8e8;
-        }
-        .solutions-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .solution-card {
-            background: #e0e0e0;
-            padding: 2rem;
-            border-radius: 12px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid #d0d0d0;
-            text-align: center;
-            box-shadow: none;
-        }
-        .solution-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-        .solution-icon {
-            width: 64px;
-            height: 64px;
-            background: #1a1a1a;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            color: white;
-            font-size: 1.5rem;
-        }
-        .solution-card h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #1a1a1a;
-        }
-        .solution-card p {
-            color: #666;
-            line-height: 1.6;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-        .solution-features {
-            list-style: none;
-            text-align: left;
-            margin: 0;
-            padding: 0;
-            display: none;
-        }
-        .solution-features li {
-            color: #666;
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
-            padding-left: 1rem;
-            position: relative;
-        }
-        .solution-features li:before {
-            content: "•";
-            color: #1a1a1a;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-        .learn-more-btn {
-            margin-top: auto;
-            margin-bottom: 1rem;
-            align-self: center;
-        }
+        .features,
+        .solutions,
         .contact {
-            padding: 5rem 2rem;
-            background: #1a1a1a;
-            color: white;
+          padding: 2rem 0.5rem;
         }
-        .contact-content {
-            max-width: 1000px;
-            margin: 0 auto;
+        .section-title {
+          font-size: 1.2rem;
         }
-        .contact-form {
-            background: #333;
-            padding: 2rem;
-            border-radius: 12px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: white;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        .form-input {
-            width: 100%;
-            max-width: 100%;
-            padding: 0.875rem;
-            border: 1px solid #555;
-            border-radius: 8px;
-            background: #444;
-            color: white;
-            font-size: 0.9rem;
-            transition: border-color 0.2s;
-            box-sizing: border-box;
-        }
-        .form-input:focus {
-            outline: none;
-            border-color: #666;
-        }
-        .form-input::placeholder {
-            color: #999;
-        }
-        .form-textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-        .submit-btn {
-            width: 100%;
-            max-width: 50%;
-            padding: 0.875rem 1.75rem;
-            background: white;
-            color: #1a1a1a;
-            border: none;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            align-self: center;
-            margin: 0 auto; /* 👈 Centers it horizontally */
-            display: block;
-        }
-        .submit-btn:hover {
-            background: #f0f0f0;
-            transform: translateY(-1px);
-        }
+      }
+      .hero {
+        padding: 8rem 2rem 4rem;
+        text-align: center;
+        background: linear-gradient(135deg, #e8e8e8 0%, #f0f0f0 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hero-content {
+        max-width: 800px;
+      }
+      .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        color: #1a1a1a;
+      }
+      .hero-subtitle {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        color: #666;
+        font-weight: 400;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .btn {
+        padding: 0.875rem 1.75rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.2s;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+      .btn-secondary {
+        background: transparent;
+        color: #1a1a1a;
+        border: 1px solid #e0e0e0;
+      }
+      .btn-secondary:hover {
+        background: #f8f8f8;
+        border-color: #ccc;
+      }
+      .features {
+        padding: 5rem 2rem;
+        background: #f0f0f0;
+      }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+      .feature-card {
+        background: #e0e0e0;
+        padding: 2rem;
+        border-radius: 12px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid #d0d0d0;
+      }
+      .feature-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+      .feature-icon {
+        width: 48px;
+        height: 48px;
+        background: #1a1a1a;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        color: white;
+        font-size: 1.25rem;
+      }
+      .feature-card h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: #1a1a1a;
+      }
+      .feature-card p {
+        color: #666;
+        line-height: 1.6;
+        font-size: 0.9rem;
+      }
+      .solutions {
+        padding: 5rem 2rem;
+        background: #e8e8e8;
+      }
+      .solutions-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 2rem;
+        margin-top: 3rem;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .solution-card {
+        background: #e0e0e0;
+        padding: 2rem;
+        border-radius: 12px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid #d0d0d0;
+        text-align: center;
+        box-shadow: none;
+      }
+      .solution-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+      .solution-icon {
+        width: 64px;
+        height: 64px;
+        background: #1a1a1a;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: white;
+        font-size: 1.5rem;
+      }
+      .solution-card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #1a1a1a;
+      }
+      .solution-card p {
+        color: #666;
+        line-height: 1.6;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+      .solution-features {
+        list-style: none;
+        text-align: left;
+        margin: 0;
+        padding: 0;
+        display: none;
+      }
+      .solution-features li {
+        color: #666;
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+        padding-left: 1rem;
+        position: relative;
+      }
+      .solution-features li:before {
+        content: "•";
+        color: #1a1a1a;
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+      }
+      .learn-more-btn {
+        margin-top: auto;
+        margin-bottom: 1rem;
+        align-self: center;
+      }
+      .contact {
+        padding: 5rem 2rem;
+        background: #1a1a1a;
+        color: white;
+      }
+      .contact-content {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+      .contact-form {
+        background: #333;
+        padding: 2rem;
+        border-radius: 12px;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: white;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+      .form-input {
+        width: 100%;
+        max-width: 100%;
+        padding: 0.875rem;
+        border: 1px solid #555;
+        border-radius: 8px;
+        background: #444;
+        color: white;
+        font-size: 0.9rem;
+        transition: border-color 0.2s;
+        box-sizing: border-box;
+      }
+      .form-input:focus {
+        outline: none;
+        border-color: #666;
+      }
+      .form-input::placeholder {
+        color: #999;
+      }
+      .form-textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+      .submit-btn {
+        width: 100%;
+        max-width: 50%;
+        padding: 0.875rem 1.75rem;
+        background: white;
+        color: #1a1a1a;
+        border: none;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        align-self: center;
+        margin: 0 auto; /* 👈 Centers it horizontally */
+        display: block;
+      }
+      .submit-btn:hover {
+        background: #f0f0f0;
+        transform: translateY(-1px);
+      }
+
+
+
+      
+      form {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      input[type="email"] {
+        padding: 8px;
+        width: 250px;
+      }
+      .form-button {
+        padding: 8px 16px;
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      .popup {
+        display: none;
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 2rem;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        border-radius: 10px;
+      }
+
+      .popup.show {
+        display: block;
+      }
+
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      }
+
+      .overlay.show {
+        display: block;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        max-width: 300px;
+        margin: 50px auto;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Header -->
     <header class="header">
-        <nav class="nav">
-            <a href="#hero" class="logo"><img src="images/logo.png" alt="8lur logo" style="width: 120px; height: auto; vertical-align: middle;"></a>
-            <div class="hamburger" id="hamburger-menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#features">Why 8lur?</a></li>
-                <li><a href="#solutions">Solutions</a></li>
-                <li><a href="#waitlist" class="waitlist-btn">Join Waitlist</a></li>
-            </ul>
-        </nav>
+      <nav class="nav">
+        <a href="#hero" class="logo"
+          ><img
+            src="images/logo.png"
+            alt="8lur logo"
+            style="width: 120px; height: auto; vertical-align: middle"
+        /></a>
+        <div class="hamburger" id="hamburger-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#features">Why 8lur?</a></li>
+          <li><a href="#solutions">Solutions</a></li>
+          <li><a href="#waitlist-form" class="waitlist-btn">Join Waitlist</a></li>
+        </ul>
+      </nav>
     </header>
     <!-- Hero Section -->
     <section id="hero" class="hero">
-        <div class="hero-content">
-            <h1>"Because Not Everything Should Be Seen."</h1>
-            <p class="hero-subtitle">
-                Detect and redact personally identifiable information with DPDP Act compliance. 
-                Simple, fast, and secure.
-            </p>
-            <div class="cta-buttons">
-                <a href="#features" class="btn btn-secondary">Learn More</a>
-            </div>
+      <div class="hero-content">
+        <h1>"Because Not Everything Should Be Seen."</h1>
+        <p class="hero-subtitle">
+          Detect and redact personally identifiable information with DPDP Act
+          compliance. Simple, fast, and secure.
+        </p>
+        <div class="cta-buttons">
+          <a href="#features" class="btn btn-secondary">Learn More</a>
         </div>
+      </div>
     </section>
     <!-- Features Section -->
     <section id="features" class="features">
-        <div class="container">
-            <h2 class="section-title">Why 8lur.com?</h2>
-            <p class="section-subtitle">
-                Built for developers who need reliable PII detection without the complexity
+      <div class="container">
+        <h2 class="section-title">Why 8lur.com?</h2>
+        <p class="section-subtitle">
+          Built for developers who need reliable PII detection without the
+          complexity
+        </p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+            <h3>DPDP Compliant</h3>
+            <p>
+              Built-in compliance with India's Digital Personal Data Protection
+              Act. Process data with confidence knowing you meet regulatory
+              requirements.
             </p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3>DPDP Compliant</h3>
-                    <p>Built-in compliance with India's Digital Personal Data Protection Act. Process data with confidence knowing you meet regulatory requirements.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-tags"></i></div>
-                    <h3>Custom Detection</h3>
-                    <p>Create organization-specific PII patterns and custom categories. Tailor detection rules to your unique data requirements.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-search"></i></div>
-                    <h3>20+ PII Types</h3>
-                    <p>Detect and redact over 20 types of personally identifiable information—including emails, phone numbers, government IDs, and more—across images, videos, documents, and databases with high accuracy.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-rocket"></i></div>
-                    <h3>Fast & Scalable</h3>
-                    <p>Process thousands of documents efficiently with batch processing and real-time API responses under 100ms.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-code"></i></div>
-                    <h3>Developer First</h3>
-                    <p>RESTful API with comprehensive documentation and multiple SDKs. Easy integration with your existing systems.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-lock"></i></div>
-                    <h3>Enterprise Security</h3>
-                    <p>SOC 2 compliant with end-to-end encryption. Your data never leaves your secure environment.</p>
-                </div>
-            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-tags"></i></div>
+            <h3>Custom Detection</h3>
+            <p>
+              Create organization-specific PII patterns and custom categories.
+              Tailor detection rules to your unique data requirements.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-search"></i></div>
+            <h3>20+ PII Types</h3>
+            <p>
+              Detect and redact over 20 types of personally identifiable
+              information—including emails, phone numbers, government IDs, and
+              more—across images, videos, documents, and databases with high
+              accuracy.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-rocket"></i></div>
+            <h3>Fast & Scalable</h3>
+            <p>
+              Process thousands of documents efficiently with batch processing
+              and real-time API responses under 100ms.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-code"></i></div>
+            <h3>Developer First</h3>
+            <p>
+              RESTful API with comprehensive documentation and multiple SDKs.
+              Easy integration with your existing systems.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-lock"></i></div>
+            <h3>Enterprise Security</h3>
+            <p>
+              SOC 2 compliant with end-to-end encryption. Your data never leaves
+              your secure environment.
+            </p>
+          </div>
         </div>
+      </div>
     </section>
     <!-- Solutions Section -->
     <section id="solutions" class="solutions">
-        <div class="container">
-            <h2 class="section-title">Our Solutions</h2>
-            <p class="section-subtitle">Comprehensive PII detection and redaction across all data types</p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-font"></i></div>
-                    <h3>TextBlur</h3>
-                    <p>Advanced text analysis with intelligent PII detection and redaction. Process documents, emails, and any text-based content.</p>
-                    <button class="learn-more-btn" type="button">Learn More</button>
-                    <ul class="solution-features" style="display:none;">
-                        <li>20+ PII types detected</li>
-                        <li>Custom pattern recognition</li>
-                        <li>Batch processing support</li>
-                        <li>Real-time API responses</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-image"></i></div>
-                    <h3>ImageBlur</h3>
-                    <p>Visual PII detection and blurring in images and photos. Automatically identify and mask sensitive information.</p>
-                    <button class="learn-more-btn" type="button">Learn More</button>
-                    <ul class="solution-features" style="display:none;">
-                        <li>OCR-based text detection</li>
-                        <li>Face and license plate blurring</li>
-                        <li>Multiple output formats</li>
-                        <li>High-resolution support</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-video"></i></div>
-                    <h3>VideoBlur</h3>
-                    <p>Real-time video processing with PII detection and masking. Perfect for live streams and recorded content.</p>
-                    <button class="learn-more-btn" type="button">Learn More</button>
-                    <ul class="solution-features" style="display:none;">
-                        <li>Real-time processing</li>
-                        <li>Multiple video formats</li>
-                        <li>Custom blur effects</li>
-                        <li>Batch video processing</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-microphone"></i></div>
-                    <h3>AudioBlur</h3>
-                    <p>Audio PII detection and redaction. Identify and mask sensitive information in audio recordings and transcripts.</p>
-                    <button class="learn-more-btn" type="button">Learn More</button>
-                    <ul class="solution-features" style="display:none;">
-                        <li>Speech-to-text processing</li>
-                        <li>Audio redaction tools</li>
-                        <li>Multiple audio formats</li>
-                        <li>Transcript generation</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-database"></i></div>
-                    <h3>DatabaseBlur</h3>
-                    <p>Database PII detection and masking. Scan and redact sensitive information across your database systems.</p>
-                    <button class="learn-more-btn" type="button">Learn More</button>
-                    <ul class="solution-features" style="display:none;">
-                        <li>Multi-database support</li>
-                        <li>Schema-aware scanning</li>
-                        <li>Bulk data processing</li>
-                        <li>Compliance reporting</li>
-                    </ul>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
-                    <h3>DocumentBlur</h3>
-                    <p>Document PII detection and redaction. Process PDFs, Word docs, and other document formats with intelligent redaction.</p>
-                    <button class="learn-more-btn" type="button">Learn More</button>
-                    <ul class="solution-features" style="display:none;">
-                        <li>Multi-format support</li>
-                        <li>OCR text extraction</li>
-                        <li>Batch processing</li>
-                        <li>Redacted output</li>
-                    </ul>
-                </div>
-            </div>
+      <div class="container">
+        <h2 class="section-title">Our Solutions</h2>
+        <p class="section-subtitle">
+          Comprehensive PII detection and redaction across all data types
+        </p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-font"></i></div>
+            <h3>TextBlur</h3>
+            <p>
+              Advanced text analysis with intelligent PII detection and
+              redaction. Process documents, emails, and any text-based content.
+            </p>
+            <button class="learn-more-btn" type="button">Learn More</button>
+            <ul class="solution-features" style="display: none">
+              <li>20+ PII types detected</li>
+              <li>Custom pattern recognition</li>
+              <li>Batch processing support</li>
+              <li>Real-time API responses</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-image"></i></div>
+            <h3>ImageBlur</h3>
+            <p>
+              Visual PII detection and blurring in images and photos.
+              Automatically identify and mask sensitive information.
+            </p>
+            <button class="learn-more-btn" type="button">Learn More</button>
+            <ul class="solution-features" style="display: none">
+              <li>OCR-based text detection</li>
+              <li>Face and license plate blurring</li>
+              <li>Multiple output formats</li>
+              <li>High-resolution support</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-video"></i></div>
+            <h3>VideoBlur</h3>
+            <p>
+              Real-time video processing with PII detection and masking. Perfect
+              for live streams and recorded content.
+            </p>
+            <button class="learn-more-btn" type="button">Learn More</button>
+            <ul class="solution-features" style="display: none">
+              <li>Real-time processing</li>
+              <li>Multiple video formats</li>
+              <li>Custom blur effects</li>
+              <li>Batch video processing</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-microphone"></i></div>
+            <h3>AudioBlur</h3>
+            <p>
+              Audio PII detection and redaction. Identify and mask sensitive
+              information in audio recordings and transcripts.
+            </p>
+            <button class="learn-more-btn" type="button">Learn More</button>
+            <ul class="solution-features" style="display: none">
+              <li>Speech-to-text processing</li>
+              <li>Audio redaction tools</li>
+              <li>Multiple audio formats</li>
+              <li>Transcript generation</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-database"></i></div>
+            <h3>DatabaseBlur</h3>
+            <p>
+              Database PII detection and masking. Scan and redact sensitive
+              information across your database systems.
+            </p>
+            <button class="learn-more-btn" type="button">Learn More</button>
+            <ul class="solution-features" style="display: none">
+              <li>Multi-database support</li>
+              <li>Schema-aware scanning</li>
+              <li>Bulk data processing</li>
+              <li>Compliance reporting</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+            <h3>DocumentBlur</h3>
+            <p>
+              Document PII detection and redaction. Process PDFs, Word docs, and
+              other document formats with intelligent redaction.
+            </p>
+            <button class="learn-more-btn" type="button">Learn More</button>
+            <ul class="solution-features" style="display: none">
+              <li>Multi-format support</li>
+              <li>OCR text extraction</li>
+              <li>Batch processing</li>
+              <li>Redacted output</li>
+            </ul>
+          </div>
         </div>
+      </div>
     </section>
     <!-- Join Waitlist Section -->
-    <section id="waitlist" class="contact">
+    <!-- <section id="waitlist" class="contact">
         <div class="contact-content">
             <h2 class="section-title" style="color:white;">Join the Waitlist</h2>
             <form class="contact-form" id="waitlist-form">
@@ -573,58 +701,92 @@
             </form>
             <div id="waitlist-message" style="text-align:center;margin-top:1rem;"></div>
         </div>
-    </section>
+    </section> -->
+
+    <form
+      id="waitlist-form"
+      action="https://formspree.io/f/mwpqobno"
+      method="POST"
+    >
+      <h2>Join the Waitlist</h2>
+      <input type="email" name="email" placeholder="Your email" required />
+      <button type="submit" className="form-button">Join Waitlist</button>
+    </form>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+      <h3>You're on the waitlist! 🎉</h3>
+      <p>Thank you for signing up.</p>
+      <button onclick="closePopup()" className="form-button">Close</button>
+    </div>
+
     <script>
-        // Smooth scroll for all anchor links
-        document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                e.preventDefault();
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                });
+      // Smooth scroll for all anchor links
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            const target = document.querySelector(this.getAttribute("href"));
+            if (target) {
+              e.preventDefault();
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          });
+        });
+        // Hamburger menu toggle
+        document
+          .getElementById("hamburger-menu")
+          .addEventListener("click", function () {
+            document.querySelector(".nav-links").classList.toggle("active");
+          });
+        // Learn More toggle for Solutions section (feature-cards in solutions)
+        document
+          .querySelectorAll("#solutions .feature-card .learn-more-btn")
+          .forEach(function (btn) {
+            var features =
+              btn.parentElement.querySelector(".solution-features");
+            btn.addEventListener("click", function () {
+              if (
+                features.style.display === "none" ||
+                features.style.display === ""
+              ) {
+                features.style.display = "block";
+                btn.textContent = "Hide Features";
+              } else {
+                features.style.display = "none";
+                btn.textContent = "Learn More";
+              }
             });
-            // Hamburger menu toggle
-            document.getElementById('hamburger-menu').addEventListener('click', function() {
-                document.querySelector('.nav-links').classList.toggle('active');
+          });
+        // Existing Learn More toggle for old Solutions section (if any remain)
+        document
+          .querySelectorAll(".solution-card .learn-more-btn")
+          .forEach(function (btn) {
+            var features =
+              btn.parentElement.querySelector(".solution-features");
+            btn.addEventListener("click", function () {
+              if (
+                features.style.display === "none" ||
+                features.style.display === ""
+              ) {
+                features.style.display = "block";
+                btn.textContent = "Hide Features";
+              } else {
+                features.style.display = "none";
+                btn.textContent = "Learn More";
+              }
             });
-            // Learn More toggle for Solutions section (feature-cards in solutions)
-            document.querySelectorAll('#solutions .feature-card .learn-more-btn').forEach(function(btn) {
-                var features = btn.parentElement.querySelector('.solution-features');
-                btn.addEventListener('click', function() {
-                    if (features.style.display === 'none' || features.style.display === '') {
-                        features.style.display = 'block';
-                        btn.textContent = 'Hide Features';
-                    } else {
-                        features.style.display = 'none';
-                        btn.textContent = 'Learn More';
-                    }
-                });
-            });
-            // Existing Learn More toggle for old Solutions section (if any remain)
-            document.querySelectorAll('.solution-card .learn-more-btn').forEach(function(btn) {
-                var features = btn.parentElement.querySelector('.solution-features');
-                btn.addEventListener('click', function() {
-                    if (features.style.display === 'none' || features.style.display === '') {
-                        features.style.display = 'block';
-                        btn.textContent = 'Hide Features';
-            } else {
-                        features.style.display = 'none';
-                        btn.textContent = 'Learn More';
-                    }
-                });
-            });
-            // Waitlist form submission
-            document.getElementById('waitlist-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                var email = document.getElementById('waitlist-email').value;
-                var messageDiv = document.getElementById('waitlist-message');
-                // --- EmailJS or backend integration placeholder ---
-                // Replace this with your backend API call or EmailJS integration
-                // Example using EmailJS (uncomment and configure):
-                /*
+          });
+        // Waitlist form submission
+        document
+          .getElementById("waitlist-form")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            var email = document.getElementById("waitlist-email").value;
+            var messageDiv = document.getElementById("waitlist-message");
+            // --- EmailJS or backend integration placeholder ---
+            // Replace this with your backend API call or EmailJS integration
+            // Example using EmailJS (uncomment and configure):
+            /*
                 emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
                     to_email: 'hemantrak05@gmail.com',
                     from_email: email
@@ -637,14 +799,47 @@
                     messageDiv.style.color = 'red';
                 });
                 */
-                // For now, just show a success message (simulate):
-                setTimeout(function() {
-                    messageDiv.textContent = 'Thank you! You have been added to the waitlist.';
-                    messageDiv.style.color = 'lightgreen';
-                    document.getElementById('waitlist-form').reset();
-                }, 800);
-            });
-        });
+            // For now, just show a success message (simulate):
+            setTimeout(function () {
+              messageDiv.textContent =
+                "Thank you! You have been added to the waitlist.";
+              messageDiv.style.color = "lightgreen";
+              document.getElementById("waitlist-form").reset();
+            }, 800);
+          });
+      });
+
+      const form = document.getElementById("waitlist-form");
+      const popup = document.getElementById("popup");
+      const overlay = document.getElementById("overlay");
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+
+        try {
+          const response = await fetch(form.action, {
+            method: form.method,
+            body: formData,
+            headers: { Accept: "application/json" },
+          });
+
+          if (response.ok) {
+            form.reset();
+            popup.classList.add("show");
+            overlay.classList.add("show");
+          } else {
+            alert("Something went wrong. Please try again.");
+          }
+        } catch (error) {
+          alert("Error submitting the form.");
+        }
+      });
+
+      function closePopup() {
+        popup.classList.remove("show");
+        overlay.classList.remove("show");
+      }
     </script>
-</body>
-</html> 
+  </body>
+</html>
