@@ -428,9 +428,6 @@
         transform: translateY(-1px);
       }
 
-
-
-      
       form {
         display: flex;
         gap: 10px;
@@ -438,7 +435,7 @@
       }
       input[type="email"] {
         padding: 8px;
-        width: 250px;
+        width: 100%;
       }
       .form-button {
         padding: 8px 16px;
@@ -507,7 +504,9 @@
         <ul class="nav-links">
           <li><a href="#features">Why 8lur?</a></li>
           <li><a href="#solutions">Solutions</a></li>
-          <li><a href="#waitlist-form" class="waitlist-btn">Join Waitlist</a></li>
+          <li>
+            <a href="#waitlist-form" class="waitlist-btn">Join Waitlist</a>
+          </li>
         </ul>
       </nav>
     </header>
@@ -703,15 +702,21 @@
         </div>
     </section> -->
 
-    <form
-      id="waitlist-form"
-      action="https://formspree.io/f/mwpqobno"
-      method="POST"
-    >
-      <h2>Join the Waitlist</h2>
-      <input type="email" name="email" placeholder="Your email" required />
-      <button type="submit" className="form-button">Join Waitlist</button>
-    </form>
+    <section id="waitlist" class="contact">
+      <div class="contact-content">
+        <h2 class="section-title" style="color: white">Join the Waitlist</h2>
+        <form
+          id="waitlist-form"
+          action="https://formspree.io/f/mwpqobno"
+          method="POST"
+          class="contact-form"
+        >
+          <label for="waitlist-email">Email</label>
+          <input type="email" name="email" placeholder="Your email" class="form-input" required />
+          <button type="submit" class="submit-btn">Join Waitlist</button>
+        </form>
+      </div>
+    </section>
 
     <div class="overlay" id="overlay"></div>
     <div class="popup" id="popup">
